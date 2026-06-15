@@ -16,6 +16,10 @@ test("divisão por zero lança erro", () => {
   assert.throws(() => calculadora.dividir(10, 0), /Divisão por zero/);
 });
 
+test("raiz quadrada de número negativo lança erro", () => {
+  assert.throws(() => calculadora.raizQuadrada(-1), /número negativo/);
+});
+
 test("calcula expressão com precedência e parênteses", () => {
   assert.equal(calculadora.calcularExpressao("2 + 3 * (4 + 1)"), 17);
   assert.equal(calculadora.calcularExpressao("2 ^ 3 ^ 2"), 512);

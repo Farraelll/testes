@@ -16,16 +16,83 @@ const operators = {
 };
 
 function tokenize(expression) {
-  return expression.replace(/\s+/g, "").match(/(\d+\.?\d*|\.\d+|[()+\-*/^])/g) ?? [];
+  const sanitized = expression.replace(/\s+/g, "");
+  const tokens = [];
+
+  for (let i = 0; i < sanitized.length; i += 1) {
+    const current = sanitized[i];
+    if ((current >= "0" && current <= "9") || current === ".") {
+      let j = i;
+      let hasDot = false;
+      let hasDigit = false;
+
+      while (j < sanitized.length) {
+        const char = sanitized[j];
+        if (char >= "0" && char <= "9") {
+          hasDigit = true;
+          j += 1;
+          continue;
+        }
+        if (char === "." && !hasDot) {
+          hasDot = true;
+          j += 1;
+          continue;
+        }
+        break;
+      }
+
+      if (!hasDigit) {
+        throw new Error("Expressão inválida.");
+      }
+
+      tokens.push(sanitized.slice(i, j));
+      i = j - 1;
+      continue;
+    }
+
+    if (operators[current] || current === "(" || current === ")") {
+      tokens.push(current);
+      continue;
+    }
+
+    throw new Error("Expressão inválida.");
+  }
+
+  return tokens;
 }
 
 function isNumeric(token) {
-  return /^-?(\d+\.?\d*|\.\d+)$/.test(token);
+  if (!token || typeof token !== "string") {
+    return false;
+  }
+
+  let i = token[0] === "-" ? 1 : 0;
+  if (i === token.length) {
+    return false;
+  }
+
+  let hasDot = false;
+  let hasDigit = false;
+
+  for (; i < token.length; i += 1) {
+    const char = token[i];
+    if (char >= "0" && char <= "9") {
+      hasDigit = true;
+      continue;
+    }
+    if (char === "." && !hasDot) {
+      hasDot = true;
+      continue;
+    }
+    return false;
+  }
+
+  return hasDigit;
 }
 
 function toRpn(expression) {
   const tokens = tokenize(expression);
-  if (!tokens.length || tokens.join("") !== expression.replace(/\s+/g, "")) {
+  if (!tokens.length) {
     throw new Error("Expressão inválida.");
   }
 
@@ -121,7 +188,7 @@ function evaluateExpression(expression) {
   return stack[0];
 }
 
-const calculadoraAvancada = {
+const calculadora = {
   somar: (a, b) => a + b,
   subtrair: (a, b) => a - b,
   multiplicar: (a, b) => a * b,
@@ -142,4 +209,4 @@ const calculadoraAvancada = {
   calcularExpressao: evaluateExpression
 };
 
-module.exports = calculadoraAvancada;
+module.exports = calculadora;
