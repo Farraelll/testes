@@ -1,4 +1,4 @@
-# testes
+# Testes
 
 Calculadora avançada em Node.js com operações básicas, funções matemáticas e cálculo de expressões com precedência.
 
@@ -8,9 +8,3 @@ Calculadora avançada em Node.js com operações básicas, funções matemática
 - Potência e raiz quadrada
 - Cálculo de porcentagem
 - Avaliação de expressões com `+`, `-`, `*`, `/`, `^` e parênteses
-
-## Executar testes
-
-```bash
-npm test
-```
