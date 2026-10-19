@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 app = Flask(__name__)
 pessoas = [{'id': 1, 'nome': 'Carlos', 'idade': 18}, {'id': 2, 'nome': 'Jose', 'idade': 25}]
@@ -6,7 +6,9 @@ nextid = 3
 @app.get('/pessoas')
 def get_pessoas():
     return jsonify(pessoas)
-
+@app.get('/site')
+def get_site():
+    return render_template('index.html')
 @app.get('/pessoas/<int:id>')
 def get_pessoa(id):
     for pessoa in pessoas:
