@@ -8,7 +8,7 @@ def get_pessoas():
     return jsonify(pessoas)
 @app.get('/site')
 def get_site():
-    return render_template('index.html')
+    return render_template('pessoa.html')
 @app.get('/pessoas/<int:id>')
 def get_pessoa(id):
     for pessoa in pessoas:
