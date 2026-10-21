@@ -1,9 +1,26 @@
+const area_resposta = document.getElementById("resposta")
+const rota_pessoa = "http://127.0.0.1:5000/pessoas"
 async function testGet(){
-    const area_resposta = document.getElementById("resposta");
+
     area_resposta.textContent = "Carregando...";
-    const resposta = await fetch("http://127.0.0.1:5000/pessoas")
+    const resposta = await fetch(rota_pessoa)
     const dados = await resposta.json();
     area_resposta.textContent = JSON.stringify(dados, null, 2)
 }
 
-const texto = document.getElementById("text_post")
+
+async function testPost() {
+    const texto = document.getElementById("text_post").value
+    area_resposta.textContent = "Carregando..."
+    const resposta = await fetch(rota_pessoa, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: texto
+    })
+    const dados = await resposta.json()
+    area_resposta.textContent = JSON.stringify(resposta, null, 2)
+
+
+}
