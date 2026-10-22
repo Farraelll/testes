@@ -12,6 +12,7 @@ async function testGet(){
 async function testPost() {
     const texto = document.getElementById("text_post").value
     area_resposta.textContent = "Carregando..."
+
     const resposta = await fetch(rota_pessoa, {
         method: "POST",
         headers: {
@@ -19,8 +20,35 @@ async function testPost() {
         },
         body: texto
     })
+
     const dados = await resposta.json()
-    area_resposta.textContent = JSON.stringify(resposta, null, 2)
+    area_resposta.textContent = JSON.stringify(dados, null, 2)
+}
 
+async function testPut() {
+    const texto = document.getElementById("text_post").value
+    area_resposta.textContent = "Carregando..."
+    const resposta = await fetch(rota_pessoa, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: texto
+    })
+    const dados = await resposta.json()
+    area_resposta.textContent = JSON.stringify(dados, null, 2)
+}
 
+async function testDelete() {
+    const texto = document.getElementById("text_post").value
+    area_resposta.textContent = "Carregando..."
+    const resposta = await fetch(rota_pessoa, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: texto
+    })
+    const dados = await resposta.json()
+    area_resposta.textContent = JSON.stringify(dados, null, 2)
 }
